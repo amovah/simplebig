@@ -9,14 +9,6 @@ type Int struct {
 	bigInt *big.Int
 }
 
-func New() *Int {
-	bigInt := new(big.Int)
-
-	return &Int{
-		bigInt: bigInt,
-	}
-}
-
 // Sign returns:
 //
 //	-1 if x <  0
@@ -41,9 +33,11 @@ func (x *Int) SetUint64(y uint64) *Int {
 
 // NewInt allocates and returns a new Int set to x.
 func NewInt(x int64) *Int {
-	newBigInt := New()
-	newBigInt.bigInt.SetInt64(x)
-	return newBigInt
+	bigInt := new(big.Int)
+	bigInt.SetInt64(x)
+	return &Int{
+		bigInt: bigInt,
+	}
 }
 
 // Set sets x to y returns x.
