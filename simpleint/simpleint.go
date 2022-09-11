@@ -1,4 +1,4 @@
-package simplebig
+package simpleint
 
 import (
 	"math/big"
@@ -9,12 +9,21 @@ type Int struct {
 	bigInt *big.Int
 }
 
+// TODO: add String and Scan
+// New allocates and returns a new Int set to x.
+func New(x int64) *Int {
+	bigInt := new(big.Int)
+	bigInt.SetInt64(x)
+	return &Int{
+		bigInt: bigInt,
+	}
+}
+
 // Sign returns:
 //
 //	-1 if x <  0
 //	 0 if x == 0
 //	+1 if x >  0
-//
 func (x *Int) Sign() int {
 	return x.bigInt.Sign()
 }
@@ -29,15 +38,6 @@ func (x *Int) SetInt64(y int64) *Int {
 func (x *Int) SetUint64(y uint64) *Int {
 	x.bigInt.SetUint64(y)
 	return x
-}
-
-// NewInt allocates and returns a new Int set to x.
-func NewInt(x int64) *Int {
-	bigInt := new(big.Int)
-	bigInt.SetInt64(x)
-	return &Int{
-		bigInt: bigInt,
-	}
 }
 
 // Set sets x to y returns x.
@@ -60,8 +60,9 @@ func (x *Int) Bits() []big.Word {
 // z. The result and abs share the same underlying array.
 // SetBits is intended to support implementation of missing low-level Int
 // functionality outside this package; it should be avoided otherwise.
-func (z *Int) SetBits(abs []big.Word) {
-	z.bigInt.SetBits(abs)
+func (x *Int) SetBits(abs []big.Word) *Int {
+	x.bigInt.SetBits(abs)
+	return x
 }
 
 // Abs returns the absolute value of x.
@@ -118,7 +119,7 @@ func (a *Int) MulRange(b int64) *Int {
 func (n *Int) Binomial(k int64) *Int {
 	bigInt := new(big.Int)
 	return &Int{
-		bigInt: bigInt.MulRange(n.bigInt.Int64(), k),
+		bigInt: bigInt.Binomial(n.bigInt.Int64(), k),
 	}
 }
 
@@ -152,9 +153,8 @@ func (x *Int) Rem(y *Int) *Int {
 //	q = x/y      with the result truncated to zero
 //	r = x - y*q
 //
-// (See Daan Leijen, ``Division and Modulus for Computer Scientists''.)
+// (See Daan Leijen, “Division and Modulus for Computer Scientists”.)
 // See DivMod for Euclidean division and modulus (unlike Go).
-//
 func (x *Int) QuoRem(y, z *Int) (*Int, *Int) {
 	return x.Quo(y), x.Rem(z)
 }
@@ -189,32 +189,29 @@ func (x *Int) Mod(y *Int) *Int {
 //	q = x div y  such that
 //	m = x - y*q  with 0 <= m < |y|
 //
-// (See Raymond T. Boute, ``The Euclidean definition of the functions
-// div and mod''. ACM Transactions on Programming Languages and
+// (See Raymond T. Boute, “The Euclidean definition of the functions
+// div and mod”. ACM Transactions on Programming Languages and
 // Systems (TOPLAS), 14(2):127-144, New York, NY, USA, 4/1992.
 // ACM press.)
 // See QuoRem for T-division and modulus (like Go).
-//
 func (x *Int) DivMod(y, z *Int) (*Int, *Int) {
 	return x.Div(y), x.Mod(z)
 }
 
 // Cmp compares x and y and returns:
 //
-//   -1 if x <  y
-//    0 if x == y
-//   +1 if x >  y
-//
+//	-1 if x <  y
+//	 0 if x == y
+//	+1 if x >  y
 func (x *Int) Cmp(y *Int) (r int) {
 	return x.bigInt.Cmp(y.bigInt)
 }
 
 // CmpAbs compares the absolute values of x and y and returns:
 //
-//   -1 if |x| <  |y|
-//    0 if |x| == |y|
-//   +1 if |x| >  |y|
-//
+//	-1 if |x| <  |y|
+//	 0 if |x| == |y|
+//	+1 if |x| >  |y|
 func (x *Int) CmpAbs(y *Int) int {
 	return x.bigInt.CmpAbs(y.bigInt)
 }
@@ -249,8 +246,8 @@ func (x *Int) IsUint64() bool {
 //
 // The base argument must be 0 or a value between 2 and MaxBase.
 // For base 0, the number prefix determines the actual base: A prefix of
-// ``0b'' or ``0B'' selects base 2, ``0'', ``0o'' or ``0O'' selects base 8,
-// and ``0x'' or ``0X'' selects base 16. Otherwise, the selected base is 10
+// “0b” or “0B” selects base 2, “0”, “0o” or “0O” selects base 8,
+// and “0x” or “0X” selects base 16. Otherwise, the selected base is 10
 // and no prefix is accepted.
 //
 // For bases <= 36, lower and upper case letters are considered the same:
@@ -258,13 +255,12 @@ func (x *Int) IsUint64() bool {
 // For bases > 36, the upper case letters 'A' to 'Z' represent the digit
 // values 36 to 61.
 //
-// For base 0, an underscore character ``_'' may appear between a base
+// For base 0, an underscore character “_” may appear between a base
 // prefix and an adjacent digit, and between successive digits; such
 // underscores do not change the value of the number.
 // Incorrect placement of underscores is reported as an error if there
 // are no other errors. If base != 0, underscores are not recognized
 // and act like any other character that is not a valid digit.
-//
 func (x *Int) SetString(s string, base int) (*Int, bool) {
 	bigInt, bool := x.bigInt.SetString(s, base)
 	return &Int{bigInt: bigInt}, bool

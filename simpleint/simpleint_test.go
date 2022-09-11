@@ -1,4 +1,4 @@
-package simplebig
+package simpleint
 
 import (
 	"math/big"
@@ -8,20 +8,45 @@ import (
 )
 
 func TestNew(t *testing.T) {
+	type args struct {
+		x int64
+	}
 	tests := []struct {
 		name string
+		args args
 		want *Int
 	}{
 		{
 			name: "1",
+			args: args{
+				x: 1,
+			},
 			want: &Int{
-				bigInt: new(big.Int),
+				bigInt: big.NewInt(1),
+			},
+		},
+		{
+			name: "2",
+			args: args{
+				x: 200,
+			},
+			want: &Int{
+				bigInt: big.NewInt(200),
+			},
+		},
+		{
+			name: "3",
+			args: args{
+				x: -32,
+			},
+			want: &Int{
+				bigInt: big.NewInt(-32),
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := New(); !reflect.DeepEqual(got, tt.want) {
+			if got := New(tt.args.x); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("New() = %v, want %v", got, tt.want)
 			}
 		})
@@ -58,6 +83,13 @@ func TestInt_Sign(t *testing.T) {
 			},
 			want: -1,
 		},
+		{
+			name: "4",
+			fields: fields{
+				bigInt: big.NewInt(123),
+			},
+			want: 1,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -84,7 +116,25 @@ func TestInt_SetInt64(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				y: 59,
+			},
+			want: New(59),
+		}, {
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(0),
+			},
+			args: args{
+				y: 0,
+			},
+			want: New(0),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -111,7 +161,25 @@ func TestInt_SetUint64(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				y: 59,
+			},
+			want: New(59),
+		}, {
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(0),
+			},
+			args: args{
+				y: 0,
+			},
+			want: New(0),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -120,26 +188,6 @@ func TestInt_SetUint64(t *testing.T) {
 			}
 			if got := x.SetUint64(tt.args.y); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Int.SetUint64() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestNewInt(t *testing.T) {
-	type args struct {
-		x int64
-	}
-	tests := []struct {
-		name string
-		args args
-		want *Int
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := NewInt(tt.args.x); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("NewInt() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -158,7 +206,16 @@ func TestInt_Set(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(5),
+			},
+			args: args{
+				y: New(15),
+			},
+			want: New(15),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -181,7 +238,13 @@ func TestInt_Bits(t *testing.T) {
 		fields fields
 		want   []big.Word
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(8),
+			},
+			want: big.NewInt(8).Bits(),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -206,15 +269,27 @@ func TestInt_SetBits(t *testing.T) {
 		name   string
 		fields fields
 		args   args
+		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				abs: big.NewInt(15).Bits(),
+			},
+			want: New(15),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			z := &Int{
+			x := &Int{
 				bigInt: tt.fields.bigInt,
 			}
-			z.SetBits(tt.args.abs)
+			if got := x.SetBits(tt.args.abs); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Int.SetBits() = %v, want %v", got, tt.want)
+			}
 		})
 	}
 }
@@ -228,7 +303,20 @@ func TestInt_Abs(t *testing.T) {
 		fields fields
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(8),
+			},
+			want: New(8),
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(-17),
+			},
+			want: New(17),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -251,7 +339,20 @@ func TestInt_Neg(t *testing.T) {
 		fields fields
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(8),
+			},
+			want: New(-8),
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(-17),
+			},
+			want: New(17),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -278,7 +379,37 @@ func TestInt_Add(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(5),
+			},
+			args: args{
+				y: New(7),
+			},
+			want: New(12),
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				y: New(-9),
+			},
+			want: New(1),
+		},
+		{
+
+			name: "3",
+			fields: fields{
+				bigInt: big.NewInt(-10),
+			},
+			args: args{
+				y: New(9),
+			},
+			want: New(-1),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -305,7 +436,16 @@ func TestInt_Sub(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(8),
+			},
+			args: args{
+				y: New(3),
+			},
+			want: New(5),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -332,7 +472,26 @@ func TestInt_Mul(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				y: New(5),
+			},
+			want: New(50),
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(5),
+			},
+			args: args{
+				y: New(-1),
+			},
+			want: New(-5),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -359,7 +518,16 @@ func TestInt_MulRange(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(1),
+			},
+			args: args{
+				b: 3,
+			},
+			want: New(6),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -386,7 +554,16 @@ func TestInt_Binomial(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(1),
+			},
+			args: args{
+				k: 5,
+			},
+			want: New(0),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
