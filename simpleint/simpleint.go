@@ -143,20 +143,10 @@ func (x *Int) Rem(y *Int) *Int {
 	}
 }
 
-// TODO: fix doc
-// QuoRem the quotient x/y and z to the remainder x%y
-// and returns the pair (x, z) for y != 0.
-// If y == 0, a division-by-zero run-time panic occurs.
-//
-// QuoRem implements T-division and modulus (like Go):
-//
-//	q = x/y      with the result truncated to zero
-//	r = x - y*q
-//
-// (See Daan Leijen, “Division and Modulus for Computer Scientists”.)
-// See DivMod for Euclidean division and modulus (unlike Go).
-func (x *Int) QuoRem(y, z *Int) (*Int, *Int) {
-	return x.Quo(y), x.Rem(z)
+// QuoRem return the quotient x/y and the remainder x%y
+// for more informations, check big.Int QuoRem method
+func (x *Int) QuoRem(y *Int) (*Int, *Int) {
+	return x.Quo(y), x.Rem(y)
 }
 
 // Div returns the quotient x/y for y != 0.
@@ -179,23 +169,10 @@ func (x *Int) Mod(y *Int) *Int {
 	}
 }
 
-// TODO: fix doc
 // DivMod returns the quotient x div y and z to the modulus x mod y
-// and returns the pair (x, z) for y != 0.
-// If y == 0, a division-by-zero run-time panic occurs.
-//
-// DivMod implements Euclidean division and modulus (unlike Go):
-//
-//	q = x div y  such that
-//	m = x - y*q  with 0 <= m < |y|
-//
-// (See Raymond T. Boute, “The Euclidean definition of the functions
-// div and mod”. ACM Transactions on Programming Languages and
-// Systems (TOPLAS), 14(2):127-144, New York, NY, USA, 4/1992.
-// ACM press.)
-// See QuoRem for T-division and modulus (like Go).
-func (x *Int) DivMod(y, z *Int) (*Int, *Int) {
-	return x.Div(y), x.Mod(z)
+// for more informations, go to big.Int
+func (x *Int) DivMod(y *Int) (*Int, *Int) {
+	return x.Div(y), x.Mod(y)
 }
 
 // Cmp compares x and y and returns:
@@ -203,7 +180,7 @@ func (x *Int) DivMod(y, z *Int) (*Int, *Int) {
 //	-1 if x <  y
 //	 0 if x == y
 //	+1 if x >  y
-func (x *Int) Cmp(y *Int) (r int) {
+func (x *Int) Cmp(y *Int) int {
 	return x.bigInt.Cmp(y.bigInt)
 }
 
@@ -238,11 +215,9 @@ func (x *Int) IsUint64() bool {
 	return x.bigInt.IsUint64()
 }
 
-// TODO: fix doc
-// SetString sets z to the value of s, interpreted in the given base,
-// and returns z and a boolean indicating success. The entire string
-// (not just a prefix) must be valid for success. If SetString fails,
-// the value of z is undefined but the returned value is nil.
+// SetString sets x to the value of s, interpreted in the given base,
+// and returns x and a boolean indicating success. The entire string
+// (not just a prefix) must be valid for success.
 //
 // The base argument must be 0 or a value between 2 and MaxBase.
 // For base 0, the number prefix determines the actual base: A prefix of
@@ -267,7 +242,7 @@ func (x *Int) SetString(s string, base int) (*Int, bool) {
 }
 
 // SetBytes interprets buf as the bytes of a big-endian unsigned
-// integer, sets z to that value, and returns z.
+// integer, sets x to that value, and returns x.
 func (x *Int) SetBytes(buf []byte) *Int {
 	x.bigInt.SetBytes(buf)
 	return x
@@ -300,40 +275,29 @@ func (x *Int) TrailingZeroBits() uint {
 	return x.bigInt.TrailingZeroBits()
 }
 
-// TODO: fix doc
 // Exp returns x**y mod |m| (i.e. the sign of m is ignored).
-// If m == nil or m == 0, z = x**y unless y <= 0 then z = 1. If m != 0, y < 0,
-// and x and m are not relatively prime, z is unchanged and nil is returned.
+// If m == nil or m == 0, x = x**y unless y <= 0 then x = 1. If m != 0, y < 0,
+// and y and m are not relatively prime, x is unchanged and nil is returned.
 //
 // Modular exponentiation of inputs of a particular size is not a
 // cryptographically constant-time operation.
-func (x *Int) Exp(y, z *Int) *Int {
+func (x *Int) Exp(y, m *Int) *Int {
 	bigInt := new(big.Int)
 	return &Int{
-		bigInt: bigInt.Exp(x.bigInt, y.bigInt, z.bigInt),
+		bigInt: bigInt.Exp(x.bigInt, y.bigInt, m.bigInt),
 	}
 }
 
-// TODO: fix doc
-// GCD sets z to the greatest common divisor of a and b and returns z.
-// If x or y are not nil, GCD sets their value such that z = a*x + b*y.
-//
-// a and b may be positive, zero or negative. (Before Go 1.14 both had
-// to be > 0.) Regardless of the signs of a and b, z is always >= 0.
-//
-// If a == b == 0, GCD sets z = x = y = 0.
-//
-// If a == 0 and b != 0, GCD sets z = |b|, x = 0, y = sign(b) * 1.
-//
-// If a != 0 and b == 0, GCD sets z = |a|, x = sign(a) * 1, y = 0.
-func (x *Int) GCD(y, a, b *Int) *Int {
+// GCD sets x to the greatest common divisor of a and b and returns z.
+// for more informations, check big.Int GCD method.
+func (z *Int) GCD(x, y, a, b *Int) *Int {
 	bigInt := new(big.Int)
 	return &Int{
 		bigInt: bigInt.GCD(x.bigInt, y.bigInt, a.bigInt, y.bigInt),
 	}
 }
 
-// Rand sets z to a pseudo-random number in [0, n) and returns z.
+// Rand sets x to a pseudo-random number in [0, n) and returns x.
 //
 // As this uses the math/rand package, it must not be used for
 // security-sensitive work. Use crypto/rand.Int instead.

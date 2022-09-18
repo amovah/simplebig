@@ -656,7 +656,6 @@ func TestInt_QuoRem(t *testing.T) {
 	}
 	type args struct {
 		y *Int
-		z *Int
 	}
 	tests := []struct {
 		name   string
@@ -665,14 +664,24 @@ func TestInt_QuoRem(t *testing.T) {
 		want   *Int
 		want1  *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(7),
+			},
+			args: args{
+				y: New(2),
+			},
+			want:  New(3),
+			want1: New(1),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			x := &Int{
 				bigInt: tt.fields.bigInt,
 			}
-			got, got1 := x.QuoRem(tt.args.y, tt.args.z)
+			got, got1 := x.QuoRem(tt.args.y)
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Int.QuoRem() got = %v, want %v", got, tt.want)
 			}
@@ -743,7 +752,6 @@ func TestInt_DivMod(t *testing.T) {
 	}
 	type args struct {
 		y *Int
-		z *Int
 	}
 	tests := []struct {
 		name   string
@@ -752,14 +760,24 @@ func TestInt_DivMod(t *testing.T) {
 		want   *Int
 		want1  *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(7),
+			},
+			args: args{
+				y: New(2),
+			},
+			want:  New(3),
+			want1: New(1),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			x := &Int{
 				bigInt: tt.fields.bigInt,
 			}
-			got, got1 := x.DivMod(tt.args.y, tt.args.z)
+			got, got1 := x.DivMod(tt.args.y)
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Int.DivMod() got = %v, want %v", got, tt.want)
 			}
@@ -783,7 +801,36 @@ func TestInt_Cmp(t *testing.T) {
 		args   args
 		wantR  int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				y: New(10),
+			},
+			wantR: 0,
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				y: New(9),
+			},
+			wantR: 1,
+		},
+		{
+			name: "3",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				y: New(11),
+			},
+			wantR: -1,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -810,7 +857,16 @@ func TestInt_CmpAbs(t *testing.T) {
 		args   args
 		want   int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				y: New(-10),
+			},
+			want: 0,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -833,7 +889,13 @@ func TestInt_Int64(t *testing.T) {
 		fields fields
 		want   int64
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(15),
+			},
+			want: 15,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -856,7 +918,19 @@ func TestInt_Uint64(t *testing.T) {
 		fields fields
 		want   uint64
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(-20),
+			},
+			want: 20,
+		}, {
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(7),
+			},
+			want: 7,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1105,6 +1179,7 @@ func TestInt_GCD(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
+		x *Int
 		y *Int
 		a *Int
 		b *Int
@@ -1119,10 +1194,10 @@ func TestInt_GCD(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			x := &Int{
+			z := &Int{
 				bigInt: tt.fields.bigInt,
 			}
-			if got := x.GCD(tt.args.y, tt.args.a, tt.args.b); !reflect.DeepEqual(got, tt.want) {
+			if got := z.GCD(tt.args.x, tt.args.y, tt.args.a, tt.args.b); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Int.GCD() = %v, want %v", got, tt.want)
 			}
 		})
