@@ -945,6 +945,13 @@ func TestInt_Uint64(t *testing.T) {
 }
 
 func TestInt_IsInt64(t *testing.T) {
+	notInt := big.NewInt(0)
+	_, err := notInt.SetString("10000000000000000000000000000000000000000000000", 10)
+	if err == false {
+		t.Errorf("cannot parse string as base 10 number")
+		t.FailNow()
+	}
+
 	type fields struct {
 		bigInt *big.Int
 	}
@@ -953,7 +960,20 @@ func TestInt_IsInt64(t *testing.T) {
 		fields fields
 		want   bool
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(-23),
+			},
+			want: true,
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: notInt,
+			},
+			want: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
