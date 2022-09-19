@@ -636,7 +636,16 @@ func TestInt_Rem(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(13),
+			},
+			args: args{
+				y: New(3),
+			},
+			want: New(1),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -705,7 +714,16 @@ func TestInt_Div(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(14),
+			},
+			args: args{
+				y: New(3),
+			},
+			want: New(4),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -732,7 +750,16 @@ func TestInt_Mod(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(14),
+			},
+			args: args{
+				y: New(3),
+			},
+			want: New(2),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -988,6 +1015,13 @@ func TestInt_IsInt64(t *testing.T) {
 }
 
 func TestInt_IsUint64(t *testing.T) {
+	notInt := big.NewInt(0)
+	_, err := notInt.SetString("10000000000000000000000000000000000000000000000", 10)
+	if err == false {
+		t.Errorf("cannot parse string as base 10 number")
+		t.FailNow()
+	}
+
 	type fields struct {
 		bigInt *big.Int
 	}
@@ -996,7 +1030,27 @@ func TestInt_IsUint64(t *testing.T) {
 		fields fields
 		want   bool
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: notInt,
+			},
+			want: false,
+		},
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(-23),
+			},
+			want: false,
+		},
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(21414415215),
+			},
+			want: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1025,19 +1079,72 @@ func TestInt_SetString(t *testing.T) {
 		want   *Int
 		want1  bool
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				s:    "15",
+				base: 10,
+			},
+			want:  New(15),
+			want1: true,
+		},
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(255),
+			},
+			args: args{
+				s:    "1111011",
+				base: 2,
+			},
+			want:  New(123),
+			want1: true,
+		},
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(255),
+			},
+			args: args{
+				s:    "af23",
+				base: 2,
+			},
+			want:  New(0),
+			want1: false,
+		},
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(255),
+			},
+			args: args{
+				s:    "-12",
+				base: 10,
+			},
+			want:  New(-12),
+			want1: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			x := &Int{
 				bigInt: tt.fields.bigInt,
 			}
+
 			got, got1 := x.SetString(tt.args.s, tt.args.base)
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Int.SetString() got = %v, want %v", got, tt.want)
-			}
 			if got1 != tt.want1 {
 				t.Errorf("Int.SetString() got1 = %v, want %v", got1, tt.want1)
+			}
+
+			if got1 == false {
+				return
+			}
+
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Int.SetString() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -1056,7 +1163,16 @@ func TestInt_SetBytes(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(17),
+			},
+			args: args{
+				buf: big.NewInt(50).Bytes(),
+			},
+			want: New(50),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1079,7 +1195,13 @@ func TestInt_Bytes(t *testing.T) {
 		fields fields
 		want   []byte
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(-23),
+			},
+			want: big.NewInt(-23).Bytes(),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1106,7 +1228,16 @@ func TestInt_FillBytes(t *testing.T) {
 		args   args
 		want   []byte
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(14),
+			},
+			args: args{
+				buf: make([]byte, 5, 5),
+			},
+			want: big.NewInt(14).FillBytes(make([]byte, 5, 5)),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1129,7 +1260,13 @@ func TestInt_BitLen(t *testing.T) {
 		fields fields
 		want   int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(8008),
+			},
+			want: big.NewInt(8008).BitLen(),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
