@@ -293,7 +293,7 @@ func (x *Int) Exp(y, m *Int) *Int {
 func (z *Int) GCD(x, y, a, b *Int) *Int {
 	bigInt := new(big.Int)
 	return &Int{
-		bigInt: bigInt.GCD(x.bigInt, y.bigInt, a.bigInt, y.bigInt),
+		bigInt: bigInt.GCD(x.bigInt, y.bigInt, a.bigInt, b.bigInt),
 	}
 }
 
@@ -306,14 +306,17 @@ func (x *Int) Rand(rnd *rand.Rand, n *Int) *Int {
 	return x
 }
 
-// TODO: beyond me - need implementation
-// ModInverse sets z to the multiplicative inverse of g in the ring ℤ/nℤ
-// and returns z. If g and n are not relatively prime, g has no multiplicative
-// inverse in the ring ℤ/nℤ.  In this case, z is unchanged and the return value
-// is nil.
-func (x *Int) ModInverse(y *Int) *Int {
-	return x
-}
+// TODO
+// ModInverse sets x to the multiplicative inverse of x in the ring ℤ/nℤ
+// and returns x. If x and n are not relatively prime, x has no multiplicative
+// inverse in the ring ℤ/nℤ.  In this case, x is unchanged and the return value
+// is x.
+// func (x *Int) ModInverse(n *Int) *Int {
+// 	bigInt := new(big.Int)
+// 	return &Int{
+// 		bigInt: bigInt.ModInverse(x.bigInt, n.bigInt),
+// 	}
+// }
 
 // Jacobi returns the Jacobi symbol (x/y), either +1, -1, or 0.
 // The y argument must be an odd integer.
@@ -321,14 +324,14 @@ func Jacobi(x, y *Int) int {
 	return big.Jacobi(x.bigInt, y.bigInt)
 }
 
-// TODO: beyond me - need implementation
+// TODO
 // ModSqrt sets z to a square root of x mod p if such a square root exists, and
 // returns z. The modulus p must be an odd prime. If x is not a square mod p,
 // ModSqrt leaves z unchanged and returns nil. This function panics if p is
 // not an odd integer.
-func (z *Int) ModSqrt(x, p *Int) *Int {
-	return z
-}
+// func (z *Int) ModSqrt(x, p *Int) *Int {
+// 	return z
+// }
 
 // Lsh returns x << n.
 func (x *Int) Lsh(n uint) *Int {
@@ -339,7 +342,7 @@ func (x *Int) Lsh(n uint) *Int {
 }
 
 // Rsh returns x >> n.
-func (z *Int) Rsh(x *Int, n uint) *Int {
+func (x *Int) Rsh(n uint) *Int {
 	bigInt := new(big.Int)
 	return &Int{
 		bigInt: bigInt.Rsh(x.bigInt, n),
@@ -352,12 +355,12 @@ func (x *Int) Bit(i int) uint {
 	return x.bigInt.Bit(i)
 }
 
-// SetBit sets x to y, with y's i'th bit set to b (0 or 1).
+// SetBit set i'th bit to b (0 or 1).
 // That is, if b is 1 SetBit sets x = y | (1 << i);
 // if b is 0 SetBit sets x = y &^ (1 << i). If b is not 0 or 1,
 // SetBit will panic.
-func (x *Int) SetBit(y *Int, i int, b uint) *Int {
-	x.bigInt.SetBit(y.bigInt, i, b)
+func (x *Int) SetBit(i int, b uint) *Int {
+	x.bigInt.SetBit(x.bigInt, i, b)
 	return x
 }
 

@@ -1289,7 +1289,20 @@ func TestInt_TrailingZeroBits(t *testing.T) {
 		fields fields
 		want   uint
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(15),
+			},
+			want: big.NewInt(15).TrailingZeroBits(),
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(1004),
+			},
+			want: big.NewInt(1004).TrailingZeroBits(),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1311,13 +1324,46 @@ func TestInt_Exp(t *testing.T) {
 		y *Int
 		z *Int
 	}
+
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(3),
+			},
+			args: args{
+				y: New(2),
+				z: New(0),
+			},
+			want: New(9),
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(3),
+			},
+			args: args{
+				y: New(2),
+				z: New(1),
+			},
+			want: New(0),
+		},
+		{
+			name: "3",
+			fields: fields{
+				bigInt: big.NewInt(5),
+			},
+			args: args{
+				y: New(3),
+				z: New(7),
+			},
+			want: New(6),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1347,7 +1393,19 @@ func TestInt_GCD(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				x: New(0),
+				y: New(0),
+				a: New(8),
+				b: New(12),
+			},
+			want: New(4),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1375,7 +1433,7 @@ func TestInt_Rand(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		// TODO: need tests
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1389,32 +1447,34 @@ func TestInt_Rand(t *testing.T) {
 	}
 }
 
-func TestInt_ModInverse(t *testing.T) {
-	type fields struct {
-		bigInt *big.Int
-	}
-	type args struct {
-		y *Int
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		args   args
-		want   *Int
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			x := &Int{
-				bigInt: tt.fields.bigInt,
-			}
-			if got := x.ModInverse(tt.args.y); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Int.ModInverse() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+// TODO: needs tests
+// func TestInt_ModInverse(t *testing.T) {
+// 	a := big.NewInt(0)
+// 	a = a.ModInverse(big.NewInt(10), big.NewInt(3))
+// 	fmt.Println(a.String())
+// 	type fields struct {
+// 		bigInt *big.Int
+// 	}
+// 	type args struct {
+// 		y *Int
+// 	}
+// 	tests := []struct {
+// 		name   string
+// 		fields fields
+// 		args   args
+// 		want   *Int
+// 	}{}
+// 	for _, tt := range tests {
+// 		t.Run(tt.name, func(t *testing.T) {
+// 			x := &Int{
+// 				bigInt: tt.fields.bigInt,
+// 			}
+// 			if got := x.ModInverse(tt.args.y); !reflect.DeepEqual(got, tt.want) {
+// 				t.Errorf("Int.ModInverse() = %v, want %v", got, tt.want)
+// 			}
+// 		})
+// 	}
+// }
 
 func TestJacobi(t *testing.T) {
 	type args struct {
@@ -1426,7 +1486,14 @@ func TestJacobi(t *testing.T) {
 		args args
 		want int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			args: args{
+				x: New(5),
+				y: New(3),
+			},
+			want: big.Jacobi(big.NewInt(5), big.NewInt(3)),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1437,33 +1504,33 @@ func TestJacobi(t *testing.T) {
 	}
 }
 
-func TestInt_ModSqrt(t *testing.T) {
-	type fields struct {
-		bigInt *big.Int
-	}
-	type args struct {
-		x *Int
-		p *Int
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		args   args
-		want   *Int
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			z := &Int{
-				bigInt: tt.fields.bigInt,
-			}
-			if got := z.ModSqrt(tt.args.x, tt.args.p); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Int.ModSqrt() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+// func TestInt_ModSqrt(t *testing.T) {
+// 	type fields struct {
+// 		bigInt *big.Int
+// 	}
+// 	type args struct {
+// 		x *Int
+// 		p *Int
+// 	}
+// 	tests := []struct {
+// 		name   string
+// 		fields fields
+// 		args   args
+// 		want   *Int
+// 	}{
+// 		// TODO: Add test cases.
+// 	}
+// 	for _, tt := range tests {
+// 		t.Run(tt.name, func(t *testing.T) {
+// 			z := &Int{
+// 				bigInt: tt.fields.bigInt,
+// 			}
+// 			if got := z.ModSqrt(tt.args.x, tt.args.p); !reflect.DeepEqual(got, tt.want) {
+// 				t.Errorf("Int.ModSqrt() = %v, want %v", got, tt.want)
+// 			}
+// 		})
+// 	}
+// }
 
 func TestInt_Lsh(t *testing.T) {
 	type fields struct {
@@ -1478,7 +1545,16 @@ func TestInt_Lsh(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				n: 3,
+			},
+			want: New(80),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1497,7 +1573,6 @@ func TestInt_Rsh(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		x *Int
 		n uint
 	}
 	tests := []struct {
@@ -1506,14 +1581,23 @@ func TestInt_Rsh(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(23),
+			},
+			args: args{
+				n: 2,
+			},
+			want: New(5),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			z := &Int{
 				bigInt: tt.fields.bigInt,
 			}
-			if got := z.Rsh(tt.args.x, tt.args.n); !reflect.DeepEqual(got, tt.want) {
+			if got := z.Rsh(tt.args.n); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Int.Rsh() = %v, want %v", got, tt.want)
 			}
 		})
@@ -1533,7 +1617,26 @@ func TestInt_Bit(t *testing.T) {
 		args   args
 		want   uint
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(12),
+			},
+			args: args{
+				i: 0,
+			},
+			want: big.NewInt(12).Bit(0),
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(12),
+			},
+			args: args{
+				i: 1,
+			},
+			want: big.NewInt(12).Bit(1),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1552,7 +1655,6 @@ func TestInt_SetBit(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
 		i int
 		b uint
 	}
@@ -1562,14 +1664,24 @@ func TestInt_SetBit(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(23),
+			},
+			args: args{
+				i: 1,
+				b: 0,
+			},
+			want: New(big.NewInt(23).SetBit(big.NewInt(23), 1, 0).Int64()),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			x := &Int{
 				bigInt: tt.fields.bigInt,
 			}
-			if got := x.SetBit(tt.args.y, tt.args.i, tt.args.b); !reflect.DeepEqual(got, tt.want) {
+			if got := x.SetBit(tt.args.i, tt.args.b); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Int.SetBit() = %v, want %v", got, tt.want)
 			}
 		})
@@ -1589,7 +1701,26 @@ func TestInt_And(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(1),
+			},
+			args: args{
+				y: New(1),
+			},
+			want: New(1),
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(15),
+			},
+			args: args{
+				y: New(57),
+			},
+			want: New(big.NewInt(0).And(big.NewInt(15), big.NewInt(57)).Int64()),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1616,7 +1747,16 @@ func TestInt_AndNot(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(15),
+			},
+			args: args{
+				y: New(57),
+			},
+			want: New(big.NewInt(0).AndNot(big.NewInt(15), big.NewInt(57)).Int64()),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1643,7 +1783,16 @@ func TestInt_Or(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(15),
+			},
+			args: args{
+				y: New(57),
+			},
+			want: New(big.NewInt(0).Or(big.NewInt(15), big.NewInt(57)).Int64()),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1670,7 +1819,16 @@ func TestInt_Xor(t *testing.T) {
 		args   args
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(15),
+			},
+			args: args{
+				y: New(57),
+			},
+			want: New(big.NewInt(0).Xor(big.NewInt(15), big.NewInt(57)).Int64()),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -1716,7 +1874,13 @@ func TestInt_Sqrt(t *testing.T) {
 		fields fields
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(9),
+			},
+			want: New(3),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
