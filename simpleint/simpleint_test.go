@@ -7,6 +7,12 @@ import (
 	"testing"
 )
 
+func newPtr(x int64) *Int {
+	return &Int{
+		bigInt: big.NewInt(x),
+	}
+}
+
 func TestInt_Sign(t *testing.T) {
 	type fields struct {
 		bigInt *big.Int
@@ -78,7 +84,7 @@ func TestInt_SetInt64(t *testing.T) {
 			args: args{
 				y: 59,
 			},
-			want: New(59),
+			want: newPtr(59),
 		}, {
 			name: "2",
 			fields: fields{
@@ -87,7 +93,7 @@ func TestInt_SetInt64(t *testing.T) {
 			args: args{
 				y: 0,
 			},
-			want: New(0),
+			want: newPtr(0),
 		},
 	}
 	for _, tt := range tests {
@@ -123,7 +129,7 @@ func TestInt_SetUint64(t *testing.T) {
 			args: args{
 				y: 59,
 			},
-			want: New(59),
+			want: newPtr(59),
 		}, {
 			name: "2",
 			fields: fields{
@@ -132,7 +138,7 @@ func TestInt_SetUint64(t *testing.T) {
 			args: args{
 				y: 0,
 			},
-			want: New(0),
+			want: newPtr(0),
 		},
 	}
 	for _, tt := range tests {
@@ -166,9 +172,9 @@ func TestInt_Set(t *testing.T) {
 				bigInt: big.NewInt(5),
 			},
 			args: args{
-				y: New(15),
+				y: newPtr(15),
 			},
-			want: New(15),
+			want: newPtr(15),
 		},
 	}
 	for _, tt := range tests {
@@ -233,7 +239,7 @@ func TestInt_SetBits(t *testing.T) {
 			args: args{
 				abs: big.NewInt(15).Bits(),
 			},
-			want: New(15),
+			want: newPtr(15),
 		},
 	}
 	for _, tt := range tests {
@@ -255,7 +261,7 @@ func TestInt_Abs(t *testing.T) {
 	tests := []struct {
 		name   string
 		fields fields
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -291,7 +297,7 @@ func TestInt_Neg(t *testing.T) {
 	tests := []struct {
 		name   string
 		fields fields
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -325,13 +331,13 @@ func TestInt_Add(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -382,13 +388,13 @@ func TestInt_Sub(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -418,13 +424,13 @@ func TestInt_Mul(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -470,7 +476,7 @@ func TestInt_MulRange(t *testing.T) {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -506,7 +512,7 @@ func TestInt_Binomial(t *testing.T) {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -536,13 +542,13 @@ func TestInt_Quo(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -582,13 +588,13 @@ func TestInt_Rem(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -618,14 +624,14 @@ func TestInt_QuoRem(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
-		want1  *Int
+		want   Int
+		want1  Int
 	}{
 		{
 			name: "1",
@@ -660,13 +666,13 @@ func TestInt_Div(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -696,13 +702,13 @@ func TestInt_Mod(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -732,14 +738,14 @@ func TestInt_DivMod(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
-		want1  *Int
+		want   Int
+		want1  Int
 	}{
 		{
 			name: "1",
@@ -774,7 +780,7 @@ func TestInt_Cmp(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
@@ -830,7 +836,7 @@ func TestInt_CmpAbs(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
@@ -1042,7 +1048,7 @@ func TestInt_SetString(t *testing.T) {
 				s:    "15",
 				base: 10,
 			},
-			want:  New(15),
+			want:  newPtr(15),
 			want1: true,
 		},
 		{
@@ -1054,7 +1060,7 @@ func TestInt_SetString(t *testing.T) {
 				s:    "1111011",
 				base: 2,
 			},
-			want:  New(123),
+			want:  newPtr(123),
 			want1: true,
 		},
 		{
@@ -1066,7 +1072,7 @@ func TestInt_SetString(t *testing.T) {
 				s:    "af23",
 				base: 2,
 			},
-			want:  New(0),
+			want:  newPtr(0),
 			want1: false,
 		},
 		{
@@ -1078,7 +1084,7 @@ func TestInt_SetString(t *testing.T) {
 				s:    "-12",
 				base: 10,
 			},
-			want:  New(-12),
+			want:  newPtr(-12),
 			want1: true,
 		},
 	}
@@ -1125,7 +1131,7 @@ func TestInt_SetBytes(t *testing.T) {
 			args: args{
 				buf: big.NewInt(50).Bytes(),
 			},
-			want: New(50),
+			want: newPtr(50),
 		},
 	}
 	for _, tt := range tests {
@@ -1275,15 +1281,15 @@ func TestInt_Exp(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
-		z *Int
+		y Int
+		z Int
 	}
 
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -1336,16 +1342,16 @@ func TestInt_GCD(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		x *Int
-		y *Int
-		a *Int
-		b *Int
+		x Int
+		y Int
+		a Int
+		b Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -1432,8 +1438,8 @@ func TestInt_Rand(t *testing.T) {
 
 func TestJacobi(t *testing.T) {
 	type args struct {
-		x *Int
-		y *Int
+		x Int
+		y Int
 	}
 	tests := []struct {
 		name string
@@ -1497,7 +1503,7 @@ func TestInt_Lsh(t *testing.T) {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -1533,7 +1539,7 @@ func TestInt_Rsh(t *testing.T) {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -1627,7 +1633,7 @@ func TestInt_SetBit(t *testing.T) {
 				i: 1,
 				b: 0,
 			},
-			want: New(big.NewInt(23).SetBit(big.NewInt(23), 1, 0).Int64()),
+			want: newPtr(big.NewInt(23).SetBit(big.NewInt(23), 1, 0).Int64()),
 		},
 	}
 	for _, tt := range tests {
@@ -1647,13 +1653,13 @@ func TestInt_And(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -1693,13 +1699,13 @@ func TestInt_AndNot(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -1729,13 +1735,13 @@ func TestInt_Or(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -1765,13 +1771,13 @@ func TestInt_Xor(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -1803,7 +1809,7 @@ func TestInt_Not(t *testing.T) {
 	tests := []struct {
 		name   string
 		fields fields
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",
@@ -1832,7 +1838,7 @@ func TestInt_Sqrt(t *testing.T) {
 	tests := []struct {
 		name   string
 		fields fields
-		want   *Int
+		want   Int
 	}{
 		{
 			name: "1",

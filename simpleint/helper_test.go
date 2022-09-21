@@ -13,14 +13,14 @@ func TestNew(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want *Int
+		want Int
 	}{
 		{
 			name: "1",
 			args: args{
 				x: 1,
 			},
-			want: &Int{
+			want: Int{
 				bigInt: big.NewInt(1),
 			},
 		},
@@ -29,7 +29,7 @@ func TestNew(t *testing.T) {
 			args: args{
 				x: 200,
 			},
-			want: &Int{
+			want: Int{
 				bigInt: big.NewInt(200),
 			},
 		},
@@ -38,7 +38,7 @@ func TestNew(t *testing.T) {
 			args: args{
 				x: -32,
 			},
-			want: &Int{
+			want: Int{
 				bigInt: big.NewInt(-32),
 			},
 		},
