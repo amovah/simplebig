@@ -1851,7 +1851,13 @@ func TestInt_Not(t *testing.T) {
 		fields fields
 		want   *Int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(15),
+			},
+			want: New(big.NewInt(15).Not(big.NewInt(15)).Int64()),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
