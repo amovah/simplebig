@@ -9,8 +9,8 @@ import (
 )
 
 func SimpleIntToFloatString(simpleIntValue simpleint.Int, precision int) string {
-	minusPow := simpleint.New(10).Pow(simpleint.New(int64(precision)).Mul(simpleint.New(-1)))
-	mod := simpleIntValue.Mod(minusPow)
+	decimals := simpleint.New(10).Pow(simpleint.New(int64(precision)).Mul(simpleint.New(-1)))
+	mod := simpleIntValue.Mod(decimals)
 
 	modFloat := new(big.Float)
 	modFloat.SetPrec(236)
@@ -26,7 +26,7 @@ func SimpleIntToFloatString(simpleIntValue simpleint.Int, precision int) string 
 		modPart = modPartArr[1]
 	}
 
-	integer := simpleIntValue.Div(minusPow)
+	integer := simpleIntValue.Div(decimals)
 
 	return fmt.Sprintf("%s.%s", integer.String(), modPart)
 }
