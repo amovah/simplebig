@@ -1,0 +1,82 @@
+package simpleint
+
+import (
+	"math/big"
+	"testing"
+)
+
+func TestInt_StringFloat(t *testing.T) {
+	type fields struct {
+		bigInt *big.Int
+	}
+	type args struct {
+		precision int
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   string
+	}{
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(101),
+			},
+			args: args{
+				precision: 1,
+			},
+			want: "10.1",
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(1000),
+			},
+			args: args{
+				precision: 1,
+			},
+			want: "100.0",
+		},
+		{
+			name: "3",
+			fields: fields{
+				bigInt: big.NewInt(1000),
+			},
+			args: args{
+				precision: 2,
+			},
+			want: "10.0",
+		},
+		{
+			name: "4",
+			fields: fields{
+				bigInt: big.NewInt(200003),
+			},
+			args: args{
+				precision: 3,
+			},
+			want: "200.003",
+		},
+		{
+			name: "5",
+			fields: fields{
+				bigInt: big.NewInt(100),
+			},
+			args: args{
+				precision: 0,
+			},
+			want: "100.0",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			x := Int{
+				bigInt: tt.fields.bigInt,
+			}
+			if got := x.StringFloat(tt.args.precision); got != tt.want {
+				t.Errorf("Int.StringFloat() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
