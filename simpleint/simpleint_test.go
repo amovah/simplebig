@@ -1537,3 +1537,41 @@ func TestInt_Sqrt(t *testing.T) {
 		})
 	}
 }
+
+func TestInt_Append(t *testing.T) {
+	type fields struct {
+		bigInt *big.Int
+	}
+	type args struct {
+		buf  []byte
+		base int
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   []byte
+	}{
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(12),
+			},
+			args: args{
+				buf:  make([]byte, 20, 20),
+				base: 10,
+			},
+			want: big.NewInt(12).Append(make([]byte, 20, 20), 10),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			x := Int{
+				bigInt: tt.fields.bigInt,
+			}
+			if got := x.Append(tt.args.buf, tt.args.base); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Int.Append() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

@@ -194,6 +194,10 @@ func (x Int) FillBytes(buf []byte) []byte {
 	return x.bigInt.FillBytes(buf)
 }
 
+func (x Int) Append(buf []byte, base int) []byte {
+	return x.bigInt.Append(buf, base)
+}
+
 // BitLen returns the length of the absolute value of x in bits.
 // The bit length of 0 is 0.
 func (x Int) BitLen() int {
