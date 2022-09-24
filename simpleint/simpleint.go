@@ -338,3 +338,16 @@ func (x Int) Sqrt() Int {
 		bigInt: bigInt.Sqrt(x.bigInt),
 	}
 }
+
+// BigInt returns underlying bigInt
+// it's a copy of BigInt so it's safe to modify or edit
+func (x Int) BigInt() *big.Int {
+	bigInt := new(big.Int)
+	bigInt.Set(x.bigInt)
+	return bigInt
+}
+
+// Pow shorthand of Exp without passing second parameter for easy usage
+func (x Int) Pow(y Int) Int {
+	return x.Exp(y, New(0))
+}

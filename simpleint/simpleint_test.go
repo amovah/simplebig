@@ -1575,3 +1575,68 @@ func TestInt_Append(t *testing.T) {
 		})
 	}
 }
+
+func TestInt_BigInt(t *testing.T) {
+	type fields struct {
+		bigInt *big.Int
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   *big.Int
+	}{
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(20),
+			},
+			want: big.NewInt(20),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			x := Int{
+				bigInt: tt.fields.bigInt,
+			}
+			if got := x.BigInt(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Int.BigInt() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestInt_Pow(t *testing.T) {
+	type fields struct {
+		bigInt *big.Int
+	}
+	type args struct {
+		y Int
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   Int
+	}{
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				y: New(2),
+			},
+			want: New(100),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			x := Int{
+				bigInt: tt.fields.bigInt,
+			}
+			if got := x.Pow(tt.args.y); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Int.Pow() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
