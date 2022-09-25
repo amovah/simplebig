@@ -12,10 +12,11 @@ func New(x int64) Int {
 	}
 }
 
-func NewBigFloat(bigFloatValue *big.Float, precision float64) Int {
+// NewBigFloat returns new Int set to x.
+func NewBigFloat(x *big.Float, decimals float64) Int {
 	copiedValue := new(big.Float)
-	copiedValue.Copy(bigFloatValue)
-	copiedValue.Mul(copiedValue, big.NewFloat(math.Pow(10, precision)))
+	copiedValue.Copy(x)
+	copiedValue.Mul(copiedValue, big.NewFloat(math.Pow(10, decimals)))
 
 	result := new(big.Int)
 	copiedValue.Int(result)

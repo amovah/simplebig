@@ -9,8 +9,6 @@ type Int struct {
 	bigInt *big.Int
 }
 
-// TODO: add String and Scan
-
 // Sign returns:
 //
 //	-1 if x <  0

@@ -27,15 +27,15 @@ func (x Int) String() string {
 // StringFloat returns strings representation of x in format of float.
 // for example if you a number 101 which it has 1 decimal, you can convert
 // it to float string, `x.StringFloat(1) == "10.1"`
-func (x Int) StringFloat(precision int) string {
-	decimals := New(10).Pow(New(int64(precision)).Mul(New(1)))
-	mod := x.Mod(decimals)
+func (x Int) StringFloat(decimals int) string {
+	decimalPart := New(10).Pow(New(int64(decimals)).Mul(New(1)))
+	mod := x.Mod(decimalPart)
 
 	modFloat := new(big.Float)
 	modFloat.SetPrec(236)
 	modFloat.SetMode(big.ToNearestEven)
 	modFloat.SetInt(mod.BigInt())
-	modFloat.Mul(modFloat, big.NewFloat(math.Pow(10, float64(precision)*-1)))
+	modFloat.Mul(modFloat, big.NewFloat(math.Pow(10, float64(decimals)*-1)))
 	modPartArr := strings.Split(modFloat.String(), ".")
 
 	var modPart string
@@ -45,7 +45,7 @@ func (x Int) StringFloat(precision int) string {
 		modPart = modPartArr[1]
 	}
 
-	integer := x.Div(decimals)
+	integer := x.Div(decimalPart)
 
 	return fmt.Sprintf("%s.%s", integer.String(), modPart)
 }
