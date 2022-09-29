@@ -1,4 +1,4 @@
-package simpleint
+package simplebig
 
 import (
 	"database/sql/driver"
@@ -28,7 +28,7 @@ func (x Int) String() string {
 // for example if you a number 101 which it has 1 decimal, you can convert
 // it to float string, `x.StringFloat(1) == "10.1"`
 func (x Int) StringFloat(decimals int) string {
-	decimalPart := New(10).Pow(New(int64(decimals)).Mul(New(1)))
+	decimalPart := NewInt(10).Pow(NewInt(int64(decimals)).Mul(NewInt(1)))
 	mod := x.Mod(decimalPart)
 
 	modFloat := new(big.Float)

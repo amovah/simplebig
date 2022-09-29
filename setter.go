@@ -1,4 +1,4 @@
-package simpleint
+package simplebig
 
 import "math/big"
 

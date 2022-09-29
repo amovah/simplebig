@@ -24,11 +24,11 @@ reuslt := numb.Sub(simpleint.New(13))
 fmt.Println(numb, result) // 12 -1
 ```
 
-- `sql.Scanner` and `sql/driver.Valuer` interfaces are implemented, `Int` and `Float` and be used
+- `sql.Scanner` and `sql/driver.Valuer` interfaces are implemented, `Int` and `Float` can be used
   directly for databases.
 - some helpers for convient like `Pow` or converting functions between
-  `simplebig/simplefloat.Float` and
-  `simplebig/simpleint.Int` are added.
+  `simplebig.Float` and
+  `simplebig.Int` are added.
 
 - method chaining:
 
@@ -59,9 +59,9 @@ type User struct {
 
 ## Database Compatibile and Break Changes:
 
-`simplebig/simpleint.Int` implements two interface to compatibile types with using in databases, but this changes breaks one
+`simplebig.Int` implements two interface to compatibile types with using in databases, but this changes breaks one
 feature and only this one from `math/big`. `math/big.Int` implements `fmt.Scanner` but
-`simplebig/simpleint.Int` implements `sql.Scanner`. due to conflict in names of these two
+`simplebig.Int` implements `sql.Scanner`. due to conflict in names of these two
 interfaces, I decided to choose one of them which is database compatibility. because there is
 a workaround for `fmt.Scanner` but there is no workaround for database compatibility.
 

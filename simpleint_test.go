@@ -1,4 +1,4 @@
-package simpleint
+package simplebig
 
 import (
 	"math/big"
@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func newPtr(x int64) *Int {
+func newIntPtr(x int64) *Int {
 	return &Int{
 		bigInt: big.NewInt(x),
 	}
@@ -106,14 +106,14 @@ func TestInt_Abs(t *testing.T) {
 			fields: fields{
 				bigInt: big.NewInt(8),
 			},
-			want: New(8),
+			want: NewInt(8),
 		},
 		{
 			name: "2",
 			fields: fields{
 				bigInt: big.NewInt(-17),
 			},
-			want: New(17),
+			want: NewInt(17),
 		},
 	}
 	for _, tt := range tests {
@@ -142,14 +142,14 @@ func TestInt_Neg(t *testing.T) {
 			fields: fields{
 				bigInt: big.NewInt(8),
 			},
-			want: New(-8),
+			want: NewInt(-8),
 		},
 		{
 			name: "2",
 			fields: fields{
 				bigInt: big.NewInt(-17),
 			},
-			want: New(17),
+			want: NewInt(17),
 		},
 	}
 	for _, tt := range tests {
@@ -183,9 +183,9 @@ func TestInt_Add(t *testing.T) {
 				bigInt: big.NewInt(5),
 			},
 			args: args{
-				y: New(7),
+				y: NewInt(7),
 			},
-			want: New(12),
+			want: NewInt(12),
 		},
 		{
 			name: "2",
@@ -193,9 +193,9 @@ func TestInt_Add(t *testing.T) {
 				bigInt: big.NewInt(10),
 			},
 			args: args{
-				y: New(-9),
+				y: NewInt(-9),
 			},
-			want: New(1),
+			want: NewInt(1),
 		},
 		{
 
@@ -204,9 +204,9 @@ func TestInt_Add(t *testing.T) {
 				bigInt: big.NewInt(-10),
 			},
 			args: args{
-				y: New(9),
+				y: NewInt(9),
 			},
-			want: New(-1),
+			want: NewInt(-1),
 		},
 	}
 	for _, tt := range tests {
@@ -240,9 +240,9 @@ func TestInt_Sub(t *testing.T) {
 				bigInt: big.NewInt(8),
 			},
 			args: args{
-				y: New(3),
+				y: NewInt(3),
 			},
-			want: New(5),
+			want: NewInt(5),
 		},
 	}
 	for _, tt := range tests {
@@ -276,9 +276,9 @@ func TestInt_Mul(t *testing.T) {
 				bigInt: big.NewInt(10),
 			},
 			args: args{
-				y: New(5),
+				y: NewInt(5),
 			},
-			want: New(50),
+			want: NewInt(50),
 		},
 		{
 			name: "2",
@@ -286,9 +286,9 @@ func TestInt_Mul(t *testing.T) {
 				bigInt: big.NewInt(5),
 			},
 			args: args{
-				y: New(-1),
+				y: NewInt(-1),
 			},
-			want: New(-5),
+			want: NewInt(-5),
 		},
 	}
 	for _, tt := range tests {
@@ -324,7 +324,7 @@ func TestInt_MulRange(t *testing.T) {
 			args: args{
 				b: 3,
 			},
-			want: New(6),
+			want: NewInt(6),
 		},
 	}
 	for _, tt := range tests {
@@ -360,7 +360,7 @@ func TestInt_Binomial(t *testing.T) {
 			args: args{
 				k: 5,
 			},
-			want: New(0),
+			want: NewInt(0),
 		},
 	}
 	for _, tt := range tests {
@@ -394,9 +394,9 @@ func TestInt_Quo(t *testing.T) {
 				bigInt: big.NewInt(10),
 			},
 			args: args{
-				y: New(5),
+				y: NewInt(5),
 			},
-			want: New(2),
+			want: NewInt(2),
 		},
 		{
 			name: "1",
@@ -404,9 +404,9 @@ func TestInt_Quo(t *testing.T) {
 				bigInt: big.NewInt(14),
 			},
 			args: args{
-				y: New(3),
+				y: NewInt(3),
 			},
-			want: New(4),
+			want: NewInt(4),
 		},
 	}
 	for _, tt := range tests {
@@ -440,9 +440,9 @@ func TestInt_Rem(t *testing.T) {
 				bigInt: big.NewInt(13),
 			},
 			args: args{
-				y: New(3),
+				y: NewInt(3),
 			},
-			want: New(1),
+			want: NewInt(1),
 		},
 	}
 	for _, tt := range tests {
@@ -477,10 +477,10 @@ func TestInt_QuoRem(t *testing.T) {
 				bigInt: big.NewInt(7),
 			},
 			args: args{
-				y: New(2),
+				y: NewInt(2),
 			},
-			want:  New(3),
-			want1: New(1),
+			want:  NewInt(3),
+			want1: NewInt(1),
 		},
 	}
 	for _, tt := range tests {
@@ -518,9 +518,9 @@ func TestInt_Div(t *testing.T) {
 				bigInt: big.NewInt(14),
 			},
 			args: args{
-				y: New(3),
+				y: NewInt(3),
 			},
-			want: New(4),
+			want: NewInt(4),
 		},
 	}
 	for _, tt := range tests {
@@ -554,9 +554,9 @@ func TestInt_Mod(t *testing.T) {
 				bigInt: big.NewInt(14),
 			},
 			args: args{
-				y: New(3),
+				y: NewInt(3),
 			},
-			want: New(2),
+			want: NewInt(2),
 		},
 	}
 	for _, tt := range tests {
@@ -591,10 +591,10 @@ func TestInt_DivMod(t *testing.T) {
 				bigInt: big.NewInt(7),
 			},
 			args: args{
-				y: New(2),
+				y: NewInt(2),
 			},
-			want:  New(3),
-			want1: New(1),
+			want:  NewInt(3),
+			want1: NewInt(1),
 		},
 	}
 	for _, tt := range tests {
@@ -632,7 +632,7 @@ func TestInt_Cmp(t *testing.T) {
 				bigInt: big.NewInt(10),
 			},
 			args: args{
-				y: New(10),
+				y: NewInt(10),
 			},
 			wantR: 0,
 		},
@@ -642,7 +642,7 @@ func TestInt_Cmp(t *testing.T) {
 				bigInt: big.NewInt(10),
 			},
 			args: args{
-				y: New(9),
+				y: NewInt(9),
 			},
 			wantR: 1,
 		},
@@ -652,7 +652,7 @@ func TestInt_Cmp(t *testing.T) {
 				bigInt: big.NewInt(10),
 			},
 			args: args{
-				y: New(11),
+				y: NewInt(11),
 			},
 			wantR: -1,
 		},
@@ -688,7 +688,7 @@ func TestInt_CmpAbs(t *testing.T) {
 				bigInt: big.NewInt(10),
 			},
 			args: args{
-				y: New(-10),
+				y: NewInt(-10),
 			},
 			want: 0,
 		},
@@ -1013,10 +1013,10 @@ func TestInt_Exp(t *testing.T) {
 				bigInt: big.NewInt(3),
 			},
 			args: args{
-				y: New(2),
-				z: New(0),
+				y: NewInt(2),
+				z: NewInt(0),
 			},
-			want: New(9),
+			want: NewInt(9),
 		},
 		{
 			name: "2",
@@ -1024,10 +1024,10 @@ func TestInt_Exp(t *testing.T) {
 				bigInt: big.NewInt(3),
 			},
 			args: args{
-				y: New(2),
-				z: New(1),
+				y: NewInt(2),
+				z: NewInt(1),
 			},
-			want: New(0),
+			want: NewInt(0),
 		},
 		{
 			name: "3",
@@ -1035,10 +1035,10 @@ func TestInt_Exp(t *testing.T) {
 				bigInt: big.NewInt(5),
 			},
 			args: args{
-				y: New(3),
-				z: New(7),
+				y: NewInt(3),
+				z: NewInt(7),
 			},
-			want: New(6),
+			want: NewInt(6),
 		},
 	}
 	for _, tt := range tests {
@@ -1075,12 +1075,12 @@ func TestInt_GCD(t *testing.T) {
 				bigInt: big.NewInt(10),
 			},
 			args: args{
-				x: New(0),
-				y: New(0),
-				a: New(8),
-				b: New(12),
+				x: NewInt(0),
+				y: NewInt(0),
+				a: NewInt(8),
+				b: NewInt(12),
 			},
-			want: New(4),
+			want: NewInt(4),
 		},
 	}
 	for _, tt := range tests {
@@ -1165,8 +1165,8 @@ func TestJacobi(t *testing.T) {
 		{
 			name: "1",
 			args: args{
-				x: New(5),
-				y: New(3),
+				x: NewInt(5),
+				y: NewInt(3),
 			},
 			want: big.Jacobi(big.NewInt(5), big.NewInt(3)),
 		},
@@ -1229,7 +1229,7 @@ func TestInt_Lsh(t *testing.T) {
 			args: args{
 				n: 3,
 			},
-			want: New(80),
+			want: NewInt(80),
 		},
 	}
 	for _, tt := range tests {
@@ -1265,7 +1265,7 @@ func TestInt_Rsh(t *testing.T) {
 			args: args{
 				n: 2,
 			},
-			want: New(5),
+			want: NewInt(5),
 		},
 	}
 	for _, tt := range tests {
@@ -1345,9 +1345,9 @@ func TestInt_And(t *testing.T) {
 				bigInt: big.NewInt(1),
 			},
 			args: args{
-				y: New(1),
+				y: NewInt(1),
 			},
-			want: New(1),
+			want: NewInt(1),
 		},
 		{
 			name: "2",
@@ -1355,9 +1355,9 @@ func TestInt_And(t *testing.T) {
 				bigInt: big.NewInt(15),
 			},
 			args: args{
-				y: New(57),
+				y: NewInt(57),
 			},
-			want: New(big.NewInt(0).And(big.NewInt(15), big.NewInt(57)).Int64()),
+			want: NewInt(big.NewInt(0).And(big.NewInt(15), big.NewInt(57)).Int64()),
 		},
 	}
 	for _, tt := range tests {
@@ -1391,9 +1391,9 @@ func TestInt_AndNot(t *testing.T) {
 				bigInt: big.NewInt(15),
 			},
 			args: args{
-				y: New(57),
+				y: NewInt(57),
 			},
-			want: New(big.NewInt(0).AndNot(big.NewInt(15), big.NewInt(57)).Int64()),
+			want: NewInt(big.NewInt(0).AndNot(big.NewInt(15), big.NewInt(57)).Int64()),
 		},
 	}
 	for _, tt := range tests {
@@ -1427,9 +1427,9 @@ func TestInt_Or(t *testing.T) {
 				bigInt: big.NewInt(15),
 			},
 			args: args{
-				y: New(57),
+				y: NewInt(57),
 			},
-			want: New(big.NewInt(0).Or(big.NewInt(15), big.NewInt(57)).Int64()),
+			want: NewInt(big.NewInt(0).Or(big.NewInt(15), big.NewInt(57)).Int64()),
 		},
 	}
 	for _, tt := range tests {
@@ -1463,9 +1463,9 @@ func TestInt_Xor(t *testing.T) {
 				bigInt: big.NewInt(15),
 			},
 			args: args{
-				y: New(57),
+				y: NewInt(57),
 			},
-			want: New(big.NewInt(0).Xor(big.NewInt(15), big.NewInt(57)).Int64()),
+			want: NewInt(big.NewInt(0).Xor(big.NewInt(15), big.NewInt(57)).Int64()),
 		},
 	}
 	for _, tt := range tests {
@@ -1494,7 +1494,7 @@ func TestInt_Not(t *testing.T) {
 			fields: fields{
 				bigInt: big.NewInt(15),
 			},
-			want: New(big.NewInt(15).Not(big.NewInt(15)).Int64()),
+			want: NewInt(big.NewInt(15).Not(big.NewInt(15)).Int64()),
 		},
 	}
 	for _, tt := range tests {
@@ -1523,7 +1523,7 @@ func TestInt_Sqrt(t *testing.T) {
 			fields: fields{
 				bigInt: big.NewInt(9),
 			},
-			want: New(3),
+			want: NewInt(3),
 		},
 	}
 	for _, tt := range tests {
@@ -1624,9 +1624,9 @@ func TestInt_Pow(t *testing.T) {
 				bigInt: big.NewInt(10),
 			},
 			args: args{
-				y: New(2),
+				y: NewInt(2),
 			},
-			want: New(100),
+			want: NewInt(100),
 		},
 	}
 	for _, tt := range tests {

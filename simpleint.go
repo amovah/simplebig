@@ -1,4 +1,4 @@
-package simpleint
+package simplebig
 
 import (
 	"math/big"
@@ -347,5 +347,5 @@ func (x Int) BigInt() *big.Int {
 
 // Pow shorthand of Exp without passing second parameter for convenient.
 func (x Int) Pow(y Int) Int {
-	return x.Exp(y, New(0))
+	return x.Exp(y, NewInt(0))
 }

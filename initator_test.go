@@ -1,4 +1,4 @@
-package simpleint
+package simplebig
 
 import (
 	"math/big"
@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestNew(t *testing.T) {
+func TestInt_New(t *testing.T) {
 	type args struct {
 		x int64
 	}
@@ -45,7 +45,7 @@ func TestNew(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := New(tt.args.x); !reflect.DeepEqual(got, tt.want) {
+			if got := NewInt(tt.args.x); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("New() = %v, want %v", got, tt.want)
 			}
 		})

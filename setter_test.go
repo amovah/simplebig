@@ -1,4 +1,4 @@
-package simpleint
+package simplebig
 
 import (
 	"math/big"
@@ -25,9 +25,9 @@ func TestInt_Set(t *testing.T) {
 				bigInt: big.NewInt(5),
 			},
 			args: args{
-				y: newPtr(15),
+				y: newIntPtr(15),
 			},
-			want: newPtr(15),
+			want: newIntPtr(15),
 		},
 	}
 	for _, tt := range tests {
@@ -65,7 +65,7 @@ func TestInt_SetBit(t *testing.T) {
 				i: 1,
 				b: 0,
 			},
-			want: newPtr(big.NewInt(23).SetBit(big.NewInt(23), 1, 0).Int64()),
+			want: newIntPtr(big.NewInt(23).SetBit(big.NewInt(23), 1, 0).Int64()),
 		},
 	}
 	for _, tt := range tests {
@@ -101,7 +101,7 @@ func TestInt_SetBits(t *testing.T) {
 			args: args{
 				abs: big.NewInt(15).Bits(),
 			},
-			want: newPtr(15),
+			want: newIntPtr(15),
 		},
 	}
 	for _, tt := range tests {
@@ -137,7 +137,7 @@ func TestInt_SetInt64(t *testing.T) {
 			args: args{
 				y: 59,
 			},
-			want: newPtr(59),
+			want: newIntPtr(59),
 		}, {
 			name: "2",
 			fields: fields{
@@ -146,7 +146,7 @@ func TestInt_SetInt64(t *testing.T) {
 			args: args{
 				y: 0,
 			},
-			want: newPtr(0),
+			want: newIntPtr(0),
 		},
 	}
 	for _, tt := range tests {
@@ -182,7 +182,7 @@ func TestInt_SetUint64(t *testing.T) {
 			args: args{
 				y: 59,
 			},
-			want: newPtr(59),
+			want: newIntPtr(59),
 		}, {
 			name: "2",
 			fields: fields{
@@ -191,7 +191,7 @@ func TestInt_SetUint64(t *testing.T) {
 			args: args{
 				y: 0,
 			},
-			want: newPtr(0),
+			want: newIntPtr(0),
 		},
 	}
 	for _, tt := range tests {
@@ -227,7 +227,7 @@ func TestInt_SetBytes(t *testing.T) {
 			args: args{
 				buf: big.NewInt(50).Bytes(),
 			},
-			want: newPtr(50),
+			want: newIntPtr(50),
 		},
 	}
 	for _, tt := range tests {
@@ -266,7 +266,7 @@ func TestInt_SetString(t *testing.T) {
 				s:    "15",
 				base: 10,
 			},
-			want:  newPtr(15),
+			want:  newIntPtr(15),
 			want1: true,
 		},
 		{
@@ -278,7 +278,7 @@ func TestInt_SetString(t *testing.T) {
 				s:    "1111011",
 				base: 2,
 			},
-			want:  newPtr(123),
+			want:  newIntPtr(123),
 			want1: true,
 		},
 		{
@@ -290,7 +290,7 @@ func TestInt_SetString(t *testing.T) {
 				s:    "af23",
 				base: 2,
 			},
-			want:  newPtr(0),
+			want:  newIntPtr(0),
 			want1: false,
 		},
 		{
@@ -302,7 +302,7 @@ func TestInt_SetString(t *testing.T) {
 				s:    "-12",
 				base: 10,
 			},
-			want:  newPtr(-12),
+			want:  newIntPtr(-12),
 			want1: true,
 		},
 	}
