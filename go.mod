@@ -1,3 +1,3 @@
-module simplebig
+module github.com/amovah/simplebig
 
-go 1.18
+go 1.19

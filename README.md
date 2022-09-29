@@ -11,16 +11,16 @@ trying to solve these with simple wrapper around `math/big`:
 - no need to pass first parameter in most functions:
 
 ```go
-numb := simpleint.New(12)
-reuslt := numb.Add(simpleint.New(13))
+numb := simplebig.NewInt(12)
+reuslt := numb.Add(simplebig.NewInt(13))
 fmt.Println(result) // 25
 ```
 
 - return instead of modify original value, it's thread-safe:
 
 ```go
-numb := simpleint.New(12)
-reuslt := numb.Sub(simpleint.New(13))
+numb := simplebig.NewInt(12)
+reuslt := numb.Sub(simplebig.NewInt(13))
 fmt.Println(numb, result) // 12 -1
 ```
 
@@ -33,8 +33,8 @@ fmt.Println(numb, result) // 12 -1
 - method chaining:
 
 ```go
-x := simpleint.New(2)
-result := x.Add(simpleint.New(13)).Sub(simpleint.New(5)).Mul(simpleint.New(2)).Pow(simpleint.New(3))
+x := simplebig.NewInt(2)
+result := x.Add(simplebig.NewInt(13)).Sub(simplebig.NewInt(5)).Mul(simplebig.NewInt(2)).Pow(simplebig.NewInt(3))
 fmt.Println(result, x) // 8000 2
 ```
 
@@ -43,7 +43,7 @@ fmt.Println(result, x) // 8000 2
 ## Example
 
 ```go
-x := simpleint.New(2).Add(simpleint.New(-5)).Mul(simpleint.New(-1))
+x := simplebig.NewInt(2).Add(simplebig.NewInt(-5)).Mul(simplebig.NewInt(-1))
 
 // get copy of underlying big.Int
 x.BigInt()
@@ -67,7 +67,7 @@ a workaround for `fmt.Scanner` but there is no workaround for database compatibi
 
 ## Todos
 
-- [ ] implement wrapper for ModInverse and ModSqrt on `simpleint.Int`
+- [ ] implement wrapper for ModInverse and ModSqrt on `simplebig.Int`
 - [ ] implement wrapper for `math/big.Float`
 - [ ] implement wrapper for `math/big.Rat`
 
