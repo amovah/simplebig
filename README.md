@@ -66,7 +66,7 @@ a workaround for `fmt.Scanner` but there is no workaround for database compatibi
 ## Todos
 
 - [ ] implement wrapper for ModInverse and ModSqrt on `simplebig.Int`
-- [*] implement wrapper for `math/big.Float`
+- [x] implement wrapper for `math/big.Float`
 - [ ] implement wrapper for `math/big.Rat`
 
 ## LICENSE
