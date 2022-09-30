@@ -1,4 +1,4 @@
-package simplefloat
+package simplebig
 
 import (
 	"math/big"
@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func newPtr(x float64) *Float {
+func newFloatPtr(x float64) *Float {
 	return &Float{
 		bigFloat: big.NewFloat(x),
 	}
@@ -33,7 +33,7 @@ func TestFloat_SetUint64(t *testing.T) {
 			args: args{
 				z: 59,
 			},
-			want: newPtr(59),
+			want: newFloatPtr(59),
 		}, {
 			name: "2",
 			fields: fields{
@@ -42,7 +42,7 @@ func TestFloat_SetUint64(t *testing.T) {
 			args: args{
 				z: 0,
 			},
-			want: newPtr(0),
+			want: newFloatPtr(0),
 		},
 	}
 	for _, tt := range tests {
@@ -78,7 +78,7 @@ func TestFloat_SetInt64(t *testing.T) {
 			args: args{
 				z: 59,
 			},
-			want: newPtr(59),
+			want: newFloatPtr(59),
 		},
 		{
 			name: "2",
@@ -88,7 +88,7 @@ func TestFloat_SetInt64(t *testing.T) {
 			args: args{
 				z: 0,
 			},
-			want: newPtr(0),
+			want: newFloatPtr(0),
 		},
 	}
 	for _, tt := range tests {
@@ -124,7 +124,7 @@ func TestFloat_SetFloat64(t *testing.T) {
 			args: args{
 				z: 59.5,
 			},
-			want: newPtr(59.5),
+			want: newFloatPtr(59.5),
 		}, {
 			name: "2",
 			fields: fields{
@@ -133,7 +133,7 @@ func TestFloat_SetFloat64(t *testing.T) {
 			args: args{
 				z: 0,
 			},
-			want: newPtr(0),
+			want: newFloatPtr(0),
 		},
 	}
 	for _, tt := range tests {
@@ -169,7 +169,7 @@ func TestFloat_SetInt(t *testing.T) {
 			args: args{
 				z: big.NewInt(12),
 			},
-			want: newPtr(12),
+			want: newFloatPtr(12),
 		}, {
 			name: "2",
 			fields: fields{
@@ -178,7 +178,7 @@ func TestFloat_SetInt(t *testing.T) {
 			args: args{
 				z: big.NewInt(0),
 			},
-			want: newPtr(0),
+			want: newFloatPtr(0),
 		},
 	}
 	for _, tt := range tests {
@@ -212,18 +212,18 @@ func TestFloat_Set(t *testing.T) {
 				bigFloat: big.NewFloat(10),
 			},
 			args: args{
-				z: newPtr(1.5),
+				z: newFloatPtr(1.5),
 			},
-			want: newPtr(1.5),
+			want: newFloatPtr(1.5),
 		}, {
 			name: "2",
 			fields: fields{
 				bigFloat: big.NewFloat(0),
 			},
 			args: args{
-				z: newPtr(0),
+				z: newFloatPtr(0),
 			},
-			want: newPtr(0),
+			want: newFloatPtr(0),
 		},
 	}
 	for _, tt := range tests {

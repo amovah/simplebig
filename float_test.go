@@ -1,4 +1,4 @@
-package simplefloat
+package simplebig
 
 import (
 	"math/big"
@@ -24,14 +24,14 @@ func TestFloat_Abs(t *testing.T) {
 			fields: fields{
 				bigFloat: big.NewFloat(8.5),
 			},
-			want: New(8.5),
+			want: NewFloat(8.5),
 		},
 		{
 			name: "2",
 			fields: fields{
 				bigFloat: big.NewFloat(-17.5),
 			},
-			want: New(17.5),
+			want: NewFloat(17.5),
 		},
 	}
 	for _, tt := range tests {
@@ -64,14 +64,14 @@ func TestFloat_Neg(t *testing.T) {
 			fields: fields{
 				bigFloat: big.NewFloat(-8.5),
 			},
-			want: New(8.5),
+			want: NewFloat(8.5),
 		},
 		{
 			name: "2",
 			fields: fields{
 				bigFloat: big.NewFloat(12.25),
 			},
-			want: New(-12.25),
+			want: NewFloat(-12.25),
 		},
 	}
 	for _, tt := range tests {
@@ -105,9 +105,9 @@ func TestFloat_Add(t *testing.T) {
 				bigFloat: big.NewFloat(12.25),
 			},
 			args: args{
-				y: New(5.5),
+				y: NewFloat(5.5),
 			},
-			want: New(17.75),
+			want: NewFloat(17.75),
 		},
 		{
 			name: "2",
@@ -115,9 +115,9 @@ func TestFloat_Add(t *testing.T) {
 				bigFloat: big.NewFloat(20),
 			},
 			args: args{
-				y: New(7),
+				y: NewFloat(7),
 			},
-			want: New(27),
+			want: NewFloat(27),
 		},
 	}
 	for _, tt := range tests {
@@ -151,9 +151,9 @@ func TestFloat_Sub(t *testing.T) {
 				bigFloat: big.NewFloat(12.25),
 			},
 			args: args{
-				y: New(5.5),
+				y: NewFloat(5.5),
 			},
-			want: New(6.75),
+			want: NewFloat(6.75),
 		},
 		{
 			name: "2",
@@ -161,9 +161,9 @@ func TestFloat_Sub(t *testing.T) {
 				bigFloat: big.NewFloat(20),
 			},
 			args: args{
-				y: New(7),
+				y: NewFloat(7),
 			},
-			want: New(13),
+			want: NewFloat(13),
 		},
 	}
 	for _, tt := range tests {
@@ -197,9 +197,9 @@ func TestFloat_Mul(t *testing.T) {
 				bigFloat: big.NewFloat(12.25),
 			},
 			args: args{
-				y: New(5.5),
+				y: NewFloat(5.5),
 			},
-			want: New(67.375),
+			want: NewFloat(67.375),
 		},
 		{
 			name: "2",
@@ -207,9 +207,9 @@ func TestFloat_Mul(t *testing.T) {
 				bigFloat: big.NewFloat(20),
 			},
 			args: args{
-				y: New(7),
+				y: NewFloat(7),
 			},
-			want: New(140),
+			want: NewFloat(140),
 		},
 	}
 	for _, tt := range tests {
@@ -243,7 +243,7 @@ func TestFloat_Quo(t *testing.T) {
 				bigFloat: big.NewFloat(12.25),
 			},
 			args: args{
-				y: New(5),
+				y: NewFloat(5),
 			},
 			want: Float{
 				bigFloat: big.NewFloat(0).Quo(big.NewFloat(12.25), big.NewFloat(5)),
@@ -255,7 +255,7 @@ func TestFloat_Quo(t *testing.T) {
 				bigFloat: big.NewFloat(20),
 			},
 			args: args{
-				y: New(7),
+				y: NewFloat(7),
 			},
 			want: Float{
 				bigFloat: big.NewFloat(0).Quo(big.NewFloat(20), big.NewFloat(7)),
@@ -293,7 +293,7 @@ func TestFloat_Cmp(t *testing.T) {
 				bigFloat: big.NewFloat(12.25),
 			},
 			args: args{
-				y: New(5),
+				y: NewFloat(5),
 			},
 			want: 1,
 		},
@@ -303,7 +303,7 @@ func TestFloat_Cmp(t *testing.T) {
 				bigFloat: big.NewFloat(0),
 			},
 			args: args{
-				y: New(7),
+				y: NewFloat(7),
 			},
 			want: -1,
 		},
@@ -313,7 +313,7 @@ func TestFloat_Cmp(t *testing.T) {
 				bigFloat: big.NewFloat(10.5),
 			},
 			args: args{
-				y: New(10.5),
+				y: NewFloat(10.5),
 			},
 			want: 0,
 		},
@@ -349,9 +349,9 @@ func TestFloat_Copy(t *testing.T) {
 				bigFloat: big.NewFloat(1),
 			},
 			args: args{
-				z: New(5),
+				z: NewFloat(5),
 			},
-			want: newPtr(5),
+			want: newFloatPtr(5),
 		},
 	}
 	for _, tt := range tests {
