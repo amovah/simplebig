@@ -4,8 +4,6 @@ simplebig is a wrapper around `math/big` built-in package and main goal is convi
 
 ## Why?
 
-### Short Version
-
 trying to solve these with simple wrapper around `math/big`:
 
 - no need to pass first parameter in most functions:
