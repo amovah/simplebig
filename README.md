@@ -14,7 +14,7 @@ reuslt := numb.Add(simplebig.NewInt(13))
 fmt.Println(result) // 25
 ```
 
-- return instead of modify original value, it's thread-safe:
+- return new value for most methods instead of modify original value, it's thread-safe:
 
 ```go
 numb := simplebig.NewInt(12)
