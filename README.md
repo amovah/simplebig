@@ -9,9 +9,8 @@ trying to solve these with simple wrapper around `math/big`:
 - no need to pass first parameter in most functions:
 
 ```go
-numb := simplebig.NewInt(12)
-reuslt := numb.Add(simplebig.NewInt(13))
-fmt.Println(result) // 25
+numb := simplebig.NewInt(12).Add(simplebig.NewInt(13))
+fmt.Println(numb) // 25
 ```
 
 - return new value for most methods instead of modify original value, it's thread-safe:
