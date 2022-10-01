@@ -11,7 +11,7 @@ func TestInt_Set(t *testing.T) {
 		bigInt *big.Int
 	}
 	type args struct {
-		y *Int
+		y Int
 	}
 	tests := []struct {
 		name   string
@@ -25,7 +25,7 @@ func TestInt_Set(t *testing.T) {
 				bigInt: big.NewInt(5),
 			},
 			args: args{
-				y: newIntPtr(15),
+				y: NewInt(15),
 			},
 			want: newIntPtr(15),
 		},
@@ -323,6 +323,124 @@ func TestInt_SetString(t *testing.T) {
 
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Int.SetString() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestInt_SetStringFloat(t *testing.T) {
+	type fields struct {
+		bigInt *big.Int
+	}
+	type args struct {
+		s        string
+		decimals int
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		args    args
+		want    *Int
+		wantErr bool
+	}{
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				s:        "1001",
+				decimals: 1,
+			},
+			want:    newIntPtr(10010),
+			wantErr: false,
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(12),
+			},
+			args: args{
+				s:        "10.1",
+				decimals: 1,
+			},
+			want:    newIntPtr(101),
+			wantErr: false,
+		},
+		{
+			name: "3",
+			fields: fields{
+				bigInt: big.NewInt(51),
+			},
+			args: args{
+				s:        "0.11",
+				decimals: 1,
+			},
+			want:    newIntPtr(1),
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			x := &Int{
+				bigInt: tt.fields.bigInt,
+			}
+			got, err := x.SetStringFloat(tt.args.s, tt.args.decimals)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Int.SetStringFloat() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Int.SetStringFloat() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestInt_SetFloat(t *testing.T) {
+	type fields struct {
+		bigInt *big.Int
+	}
+	type args struct {
+		y        Float
+		decimals int
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   *Int
+	}{
+		{
+			name: "1",
+			fields: fields{
+				bigInt: big.NewInt(10),
+			},
+			args: args{
+				y:        NewFloat(50.5),
+				decimals: 1,
+			},
+			want: newIntPtr(505),
+		},
+		{
+			name: "2",
+			fields: fields{
+				bigInt: big.NewInt(0),
+			},
+			args: args{
+				y:        NewFloat(5.1),
+				decimals: 0,
+			},
+			want: newIntPtr(5),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			x := &Int{
+				bigInt: tt.fields.bigInt,
+			}
+			if got := x.SetFloat(tt.args.y, tt.args.decimals); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Int.SetFloat() = %v, want %v", got, tt.want)
 			}
 		})
 	}

@@ -1125,9 +1125,6 @@ func TestInt_Rand(t *testing.T) {
 
 // TODO: needs tests
 // func TestInt_ModInverse(t *testing.T) {
-// 	a := big.NewInt(0)
-// 	a = a.ModInverse(big.NewInt(10), big.NewInt(3))
-// 	fmt.Println(a.String())
 // 	type fields struct {
 // 		bigInt *big.Int
 // 	}

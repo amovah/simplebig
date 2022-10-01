@@ -11,6 +11,11 @@ func (x Float) Append(buf []byte, fmt byte, prec int) []byte {
 	return x.bigFloat.Append(buf, fmt, prec)
 }
 
+// String formats x like x.Text('g', 10).
+func (x *Float) String() string {
+	return x.bigFloat.String()
+}
+
 // Format implements fmt.Formatter. It accepts all the regular
 // formats for floating-point numbers ('b', 'e', 'E', 'f', 'F',
 // 'g', 'G', 'x') as well as 'p' and 'v'. See (*Float).Text for the

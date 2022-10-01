@@ -169,11 +169,8 @@ func (x Float) Int() (Int, big.Accuracy) {
 // accuracy as x, and returns x. y is not changed even if x and
 // y are the same.
 func (x *Float) Copy(y Float) *Float {
-	bigFloat := x.bigFloat.Copy(y.bigFloat)
-
-	return &Float{
-		bigFloat: bigFloat,
-	}
+	x.bigFloat.Copy(y.bigFloat)
+	return x
 }
 
 // Abs returns the (possibly rounded) value |x| (the absolute value of x)

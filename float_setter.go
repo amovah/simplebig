@@ -57,11 +57,6 @@ func (x *Float) SetString(s string) (*Float, bool) {
 	return x, bool
 }
 
-// String formats x like x.Text('g', 10).
-func (x *Float) String() string {
-	return x.bigFloat.String()
-}
-
 // SetInf sets x to the infinite Float -Inf if signbit is
 // set, or +Inf if signbit is not set, and returns x. The
 // precision of x is unchanged and the result is always

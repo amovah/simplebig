@@ -1,6 +1,8 @@
 package simplebig
 
-import "math/big"
+import (
+	"math/big"
+)
 
 // SetBit set i'th bit to b (0 or 1).
 // That is, if b is 1 SetBit sets x = y | (1 << i);
@@ -19,7 +21,7 @@ func (x *Int) SetBytes(buf []byte) *Int {
 }
 
 // Set sets x to y returns x.
-func (x *Int) Set(y *Int) *Int {
+func (x *Int) Set(y Int) *Int {
 	x.bigInt.Set(y.bigInt)
 	return x
 }
@@ -68,6 +70,21 @@ func (x *Int) SetUint64(y uint64) *Int {
 // are no other errors. If base != 0, underscores are not recognized
 // and act like any other character that is not a valid digit.
 func (x *Int) SetString(s string, base int) (*Int, bool) {
-	bigInt, bool := x.bigInt.SetString(s, base)
-	return &Int{bigInt: bigInt}, bool
+	_, bool := x.bigInt.SetString(s, base)
+	return x, bool
+}
+
+// SetStringFloat sets x to int part s which multplied by 10**decimals and an error
+func (x *Int) SetStringFloat(s string, decimals int) (*Int, error) {
+	simpleInt, err := NewIntFromStringFloat(s, decimals)
+	if err != nil {
+		return x, err
+	}
+	return x.Set(simpleInt), nil
+}
+
+// SetFloat sets x to int part of y which multplied by 10**decimals
+func (x *Int) SetFloat(y Float, decimals int) *Int {
+	simpleInt := NewIntFromFloat(y, decimals)
+	return x.Set(simpleInt)
 }

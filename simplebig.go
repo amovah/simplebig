@@ -12,17 +12,10 @@ func NewInt(x int64) Int {
 	}
 }
 
-// NewIntFromBigFloat returns new Int set to x.
-func NewIntFromBigFloat(x *big.Float, decimals float64) Int {
-	copiedValue := new(big.Float)
-	copiedValue.Copy(x)
-	copiedValue.Mul(copiedValue, big.NewFloat(math.Pow(10, decimals)))
-
-	result := new(big.Int)
-	copiedValue.Int(result)
-	return Int{
-		bigInt: result,
-	}
+// NewIntFromFloat returns new Int set to int part of x which multiplied by 10**decimals
+func NewIntFromFloat(x Float, decimals int) Int {
+	simpleInt, _ := x.Mul(NewFloat(math.Pow(10, float64(decimals)))).Int()
+	return simpleInt
 }
 
 // NewIntFromBigInt allocates and returns new Int with value of x.
@@ -32,6 +25,17 @@ func NewIntFromBigInt(x *big.Int) Int {
 	}
 }
 
+// NewIntFromStringFloat allocates and returns a Int with value of int part of s which multiplied by
+// 10**decimals
+func NewIntFromStringFloat(s string, decimals int) (Int, error) {
+	simpleFloat, err := NewFloatFromString(s, 10)
+	if err != nil {
+		return NewInt(0), err
+	}
+
+	return NewIntFromFloat(simpleFloat, decimals), err
+}
+
 // NewIntFromString allocates and returns new Int and a boolean indicating of success.
 func NewIntFromString(s string, base int) (Int, bool) {
 	simpleInt := NewInt(0)
@@ -39,11 +43,18 @@ func NewIntFromString(s string, base int) (Int, bool) {
 	return simpleInt, ok
 }
 
-// NewFloat allocates and returns a new Float set to x.
+// NewFloat allocates and returns a new Float sets to x.
 func NewFloat(x float64) Float {
 	return Float{
 		bigFloat: big.NewFloat(x),
 	}
+}
+
+// NewFloatFromBigFloat allocates a new Float sets to x.
+func NewFloatFromBigFloat(x *big.Float) Float {
+	simpleFloat := NewFloat(0)
+	simpleFloat.bigFloat.Copy(x)
+	return simpleFloat
 }
 
 // NewIntFromString allocates and returns new Float and a boolean indicating of success.
