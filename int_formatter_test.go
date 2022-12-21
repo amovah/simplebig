@@ -1,6 +1,8 @@
 package simplebig
 
 import (
+	"encoding/json"
+	"fmt"
 	"math/big"
 	"testing"
 )
@@ -79,4 +81,18 @@ func TestInt_StringFloat(t *testing.T) {
 			}
 		})
 	}
+}
+
+type Data struct {
+	Value Int `json:"value"`
+}
+
+func TestUnmarshal(t *testing.T) {
+	jsonData := []byte("{ \"value\": 40000000000000000 }")
+
+	d := &Data{}
+	json.Unmarshal(jsonData, d)
+	fmt.Println(d)
+	mData, err := json.Marshal(d)
+	fmt.Println(string(mData), err)
 }

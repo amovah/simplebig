@@ -57,7 +57,12 @@ func (x *Int) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
 func (x *Int) UnmarshalJSON(text []byte) error {
-	return x.bigInt.UnmarshalJSON(text)
+	newBig := big.NewInt(0)
+	if err := newBig.UnmarshalJSON(text); err != nil {
+		return err
+	}
+	x.bigInt = newBig
+	return nil
 }
 
 // MarshalText implements the encoding.TextMarshaler interface.
@@ -67,6 +72,11 @@ func (x *Int) MarshalText() ([]byte, error) {
 
 // UnmarshalText implements the encoding.TextUnmarshaler interface.
 func (x *Int) UnmarshalText(text []byte) error {
+	newBig := big.NewInt(0)
+	if err := newBig.UnmarshalText(text); err != nil {
+		return err
+	}
+	x.bigInt = newBig
 	return x.bigInt.UnmarshalText(text)
 }
 
