@@ -28,7 +28,7 @@ func (x Int) String() string {
 // for example if you a number 101 which it has 1 decimal, you can convert
 // it to float string, `x.StringFloat(1) == "10.1"`
 func (x Int) StringFloat(decimals int) string {
-	decimalPart := NewInt(10).Pow(NewInt(int64(decimals)).Mul(NewInt(1)))
+	decimalPart := NewInt(10).Pow(NewInt(int64(decimals)))
 	mod := x.Mod(decimalPart)
 
 	modFloat := new(big.Float)
@@ -48,6 +48,30 @@ func (x Int) StringFloat(decimals int) string {
 	integer := x.Div(decimalPart)
 
 	return fmt.Sprintf("%s.%s", integer.String(), modPart)
+}
+
+// Floater returns strings representation of x in format of float.
+// for example if you a number 101 which it has 1 decimal, you can convert
+// it to float string, `x.StringFloat(1) == "10.1"`
+// it is like to StringFloat but using strings instead casting to big float
+func (x Int) Floater(decimals int) string {
+	bigString := x.String()
+	if decimals == 0 {
+		return bigString
+	}
+
+	if len(bigString) < decimals {
+		untrun := "0." + strings.Repeat("0", decimals-len(bigString)) + bigString
+		return strings.TrimRight(untrun, "0")
+	}
+
+	rightPart := strings.TrimRight(bigString[len(bigString)-decimals:], "0")
+	leftPart := bigString[0 : len(bigString)-decimals]
+	if rightPart == "" {
+		return leftPart
+	}
+
+	return leftPart + "." + rightPart
 }
 
 // MarshalJSON implements the json.Marshaler interface.
