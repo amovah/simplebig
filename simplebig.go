@@ -1,8 +1,10 @@
 package simplebig
 
 import (
+	"fmt"
 	"math"
 	"math/big"
+	"strings"
 )
 
 // NewInt allocates and returns a new Int set to x.
@@ -28,12 +30,27 @@ func NewIntFromBigInt(x *big.Int) Int {
 // NewIntFromStringFloat allocates and returns a Int with value of int part of s which multiplied by
 // 10**decimals
 func NewIntFromStringFloat(s string, decimals int) (Int, error) {
-	simpleFloat, err := NewFloatFromString(s, 10)
-	if err != nil {
-		return NewInt(0), err
+	splitted := strings.Split(s, ".")
+
+	floatPart := ""
+	if len(splitted) > 1 {
+		floatPart = splitted[1]
+
+		if len(floatPart) > decimals {
+			floatPart = floatPart[0:decimals]
+		}
+	}
+	if len(floatPart) < decimals {
+		floatPart = floatPart + strings.Repeat("0", decimals-len(floatPart))
 	}
 
-	return NewIntFromFloat(simpleFloat, decimals), err
+	newBigInt, ok := NewIntFromString(splitted[0]+floatPart, 10)
+	var err error = nil
+	if !ok {
+		err = fmt.Errorf("unable to parse %s to simplebig.Int", s)
+	}
+
+	return newBigInt, err
 }
 
 // NewIntFromString allocates and returns new Int and a boolean indicating of success.
