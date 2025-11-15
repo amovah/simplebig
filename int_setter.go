@@ -70,12 +70,13 @@ func (x *Int) SetUint64(y uint64) *Int {
 // are no other errors. If base != 0, underscores are not recognized
 // and act like any other character that is not a valid digit.
 func (x *Int) SetString(s string, base int) (*Int, bool) {
-	converted, ok := NewIntFromString(s, base)
-	if !ok {
-		return x, ok
+	n := NewInt(0)
+	_, ok := n.bigInt.SetString(s, base)
+	if ok {
+		return &n, ok
 	}
 
-	return &converted, true
+	return x, ok
 }
 
 // SetStringFloat sets x to int part s which multplied by 10**decimals and an error
