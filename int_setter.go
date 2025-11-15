@@ -73,7 +73,7 @@ func (x *Int) SetString(s string, base int) (*Int, bool) {
 	n := NewInt(0)
 	_, ok := n.bigInt.SetString(s, base)
 	if ok {
-		return &n, ok
+		x = &n
 	}
 
 	return x, ok
