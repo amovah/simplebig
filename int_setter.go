@@ -70,6 +70,11 @@ func (x *Int) SetUint64(y uint64) *Int {
 // are no other errors. If base != 0, underscores are not recognized
 // and act like any other character that is not a valid digit.
 func (x *Int) SetString(s string, base int) (*Int, bool) {
+	if x == nil {
+		newInt := NewInt(0)
+		x = &newInt
+	}
+
 	_, bool := x.bigInt.SetString(s, base)
 	return x, bool
 }
