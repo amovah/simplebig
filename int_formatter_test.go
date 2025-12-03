@@ -166,6 +166,16 @@ func TestInt_Floater(t *testing.T) {
 			},
 			want: "0.00012",
 		},
+		{
+			name: "7",
+			fields: fields{
+				bigInt: big.NewInt(9989),
+			},
+			args: args{
+				precision: 4,
+			},
+			want: "0.9989",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

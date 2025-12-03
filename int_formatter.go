@@ -71,6 +71,10 @@ func (x Int) Floater(decimals int) string {
 		return leftPart
 	}
 
+	if leftPart == "" {
+		leftPart = "0"
+	}
+
 	return leftPart + "." + rightPart
 }
 
